@@ -1,0 +1,139 @@
+@import "_setup";
+
+.wrapper {
+  max-width: 1800px;
+  width: 90%;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 125%;
+  background-color: #f9f7f7;
+  header {
+    width: 100vw;
+    background-color: #cc9b6d;
+    height: auto;
+    h1 {
+      padding: 15px;
+      font-family: "Odibee Sans", cursive;
+      font-size: 4rem;
+      margin: 0px 0px;
+      text-align: center;
+      text-transform: uppercase;
+      color: #f6e6cb;
+    }
+    p {
+      font-size: 2rem;
+      margin: 0px 0px;
+      font-stretch: expanded;
+      letter-spacing: 5px;
+
+      text-align: center;
+      text-transform: uppercase;
+      color: #f6e6cb;
+    }
+    a {
+      color: inherit;
+    }
+  }
+}
+.modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    160deg,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(128, 128, 128, 0.4) 25%,
+    rgba(0, 0, 0, 0.6) 50%,
+    rgba(128, 128, 128, 0.4) 75%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  .innerContent {
+    background-color: white;
+    padding: 40px;
+    width: 80vw;
+    height: 80vh;
+    display: grid;
+    grid-template-columns: 0.6fr 1.4fr;
+    grid-template-rows: 0.2fr 1.4fr 1.4fr;
+    gap: 20px 20px;
+    grid-template-areas:
+      ". ."
+      ". ."
+      ". .";
+    .title {
+      font-size: 2rem;
+    }
+    .bookReviewName {
+      grid-row-start: 3;
+    }
+    li {
+      list-style: none;
+    }
+    img {
+      grid-row-start: 2;
+    }
+  }
+}
+
+main {
+  margin: auto;
+  ul {
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    li {
+      list-style: none;
+      margin: 20px;
+      p {
+        text-align: center;
+        text-transform: uppercase;
+      }
+      img {
+        width: 400px;
+        height: 600px;
+      }
+      img:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  div {
+    form {
+      text-align: center;
+      label {
+      }
+      select {
+      }
+      input {
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  main {
+    ul {
+      li {
+        p {
+        }
+        img {
+          width: 200px;
+          height: 400px;
+          margin: auto;
+        }
+        img:hover {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+}
