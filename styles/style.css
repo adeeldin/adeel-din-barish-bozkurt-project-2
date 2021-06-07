@@ -292,7 +292,6 @@ body {
   background-color: #f9f7f7;
 }
 body header {
-  width: 100vw;
   background-color: #cc9b6d;
   height: auto;
 }
@@ -300,14 +299,14 @@ body header h1 {
   padding: 15px;
   font-family: "Odibee Sans", cursive;
   font-size: 4rem;
-  margin: 0px 0px;
+  margin: 0;
   text-align: center;
   text-transform: uppercase;
   color: #f6e6cb;
 }
 body header p {
   font-size: 2rem;
-  margin: 0px 0px;
+  margin: 0;
   font-stretch: expanded;
   letter-spacing: 5px;
   text-align: center;
@@ -323,6 +322,7 @@ body header a {
   width: 100vw;
   height: 100vh;
   top: 0;
+  color: white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -334,32 +334,74 @@ body header a {
           align-items: center;
   background: linear-gradient(160deg, rgba(0, 0, 0, 0.6) 0%, rgba(128, 128, 128, 0.4) 25%, rgba(0, 0, 0, 0.6) 50%, rgba(128, 128, 128, 0.4) 75%, rgba(0, 0, 0, 0.6) 100%);
 }
-.modal .innerContent {
-  background-color: white;
+.modal .modalScroll {
+  background-color: rgba(22, 22, 22, 0.973);
+  border-radius: 20px;
+  padding: 20px 0;
+}
+.modal .modalScroll .innerContent {
+  position: relative;
+  background-color: rgba(22, 22, 22, 0.973);
   padding: 40px;
   width: 80vw;
   height: 80vh;
-  display: grid;
-  grid-template-columns: 0.6fr 1.4fr;
-  grid-template-rows: 0.2fr 1.4fr 1.4fr;
-  gap: 20px 20px;
-  grid-template-areas: ". ." ". ." ". .";
+  overflow-y: auto;
+  border-radius: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
-.modal .innerContent .title {
-  font-size: 2rem;
+.modal .modalScroll .innerContent p {
+  text-align: center;
 }
-.modal .innerContent .bookReviewName {
-  grid-row-start: 3;
+.modal .modalScroll .innerContent .title {
+  font-size: 3rem;
+  text-decoration: underline;
 }
-.modal .innerContent li {
+.modal .modalScroll .innerContent li {
   list-style: none;
+  text-align: center;
 }
-.modal .innerContent img {
-  grid-row-start: 2;
+.modal .modalScroll .innerContent img {
+  width: 400px;
+  height: 600px;
+}
+.modal .modalScroll .innerContent a {
+  text-decoration: none;
+  color: white;
+}
+.modal .modalScroll .innerContent a:hover {
+  color: grey;
+}
+.modal .modalScroll .innerContent hr {
+  border-style: dotted;
+  border-bottom: none;
+  width: 50px;
+  border-width: 10px;
+  color: white;
+}
+.modal .modalScroll .innerContent .closeModal {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  font-size: 2rem;
+  background-color: transparent;
+  color: white;
+  border: none;
 }
 
 main {
   margin: auto;
+}
+main .genreSelector {
+  margin: 20px;
 }
 main ul {
   padding: 0px;
@@ -383,22 +425,71 @@ main ul li p {
 main ul li img {
   width: 400px;
   height: 600px;
+  -webkit-user-select: auto;
+     -moz-user-select: auto;
+      -ms-user-select: auto;
+          user-select: auto;
 }
-main ul li img:hover {
+main ul li .buttonStyle {
+  background-color: transparent;
+  border: none;
+}
+main ul li .buttonStyle:focus,
+main ul li .buttonStyle:hover {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
+  cursor: pointer;
 }
 main div form {
   text-align: center;
 }
 @media only screen and (max-width: 600px) {
+  .modal {
+    overflow-y: scroll;
+  }
+  .modal .modalScroll .innerContent {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100vw;
+    height: auto;
+    background-color: rgba(22, 22, 22, 0.973);
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    border-radius: 0;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .modal .modalScroll .innerContent img {
+    width: 80vw;
+    height: auto;
+  }
+  .modal .modalScroll .innerContent .closeModal {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
   main ul li img {
-    width: 200px;
-    height: 400px;
-    margin: auto;
+    width: 80vw;
+    height: auto;
   }
   main ul li img:hover {
     -webkit-transform: scale(1);
             transform: scale(1);
+  }
+  main div form {
+    text-align: center;
+  }
+  main div form select {
+    width: 85%;
   }
 }

@@ -18,7 +18,7 @@ app.populateGenreOptions = function () {
         // 'proxyHeaders[Some-Header]': 'goes here',
     });
 
-    //api call
+    //api call to populate genre section
     fetch(populateUrl)
         .then(response => {
             return response.json()
@@ -54,7 +54,7 @@ app.searchByISBN = function (isbn) {
         'params[api-key]': 'VGnDGaD8A3qh1qSrqo0ppSGLHoMcom3T' //api key
         // 'proxyHeaders[Some-Header]': 'goes here',
     });
-    //api call
+    //api call to populate the modal
     fetch(isbnURL)
         .then(response => {
             return response.json()
@@ -64,13 +64,16 @@ app.searchByISBN = function (isbn) {
             const div = document.createElement('div');
             div.classList.add('modal');
 
-            div.innerHTML = `<div class='innerContent'>
+            div.innerHTML = `<div class="modalScroll"><div class='innerContent'>
+            <button class="closeModal" onclick="app.closeModal(this)">&#10006</button>
             <p class='title'>${data['results'][0].title}</p>
             <img src="http://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title}">
             <ul>
                 <li>Author: ${data['results'][0].author}</li>
                 <li>Publisher: ${data['results'][0].publisher}</li>
             </ul>
+
+            <hr>
 
             <p>${data['results'][0].description}</p>
 
@@ -79,6 +82,7 @@ app.searchByISBN = function (isbn) {
             
 
 
+        </div>
         </div>`;
 
             document.querySelector('body').append(div);
@@ -100,7 +104,7 @@ app.searchBooks = function (genre) {
         'params[api-key]': 'VGnDGaD8A3qh1qSrqo0ppSGLHoMcom3T' //api key
         // 'proxyHeaders[Some-Header]': 'goes here',
     });
-    //api call
+    //api call to populate the main page
     fetch(populateUrl)
         .then(response => {
             return response.json()
@@ -115,7 +119,7 @@ app.searchBooks = function (genre) {
                 image.onload = function () { //on a successful load of image run this function
 
                     imgEl.innerHTML = `<p>${value['book_details'][0].title}</p>
-                    <img id = "${value['isbns'][0].isbn10}" src="http://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg" alt="">`
+                    <button class="buttonStyle" onclick="app.displayModal(this)"><img id = "${value['isbns'][0].isbn10}" src="http://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg" alt=""></button>`
                     document.querySelector('.bookDisplay').append(imgEl);
                 }
 
@@ -140,16 +144,20 @@ app.addEventListeners = function () {
         if (event.target.className === 'modal') {
             event.target.style.display = 'none';
         }
-
-        if (event.target.nodeName === "IMG") {
-            app.searchByISBN(event.target.id);
-        }
-
     })
 
 
 }
+app.closeModal = function(event) {
+    // console.log(`works`)
+    // console.log(event.parentNode.parentNode)
+    event.parentNode.parentNode.parentNode.style.display = `none`;
+}
+//display model pop-up on tab & click
+app.displayModal = function (event) {
+    app.searchByISBN(event.childNodes[0].id);
 
+}
 //init function
 app.init = function () {
     app.populateGenreOptions();
