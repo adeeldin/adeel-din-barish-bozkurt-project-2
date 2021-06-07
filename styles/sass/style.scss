@@ -10,21 +10,21 @@ body {
   font-size: 125%;
   background-color: #f9f7f7;
   header {
-    width: 100vw;
+    // width: 100vw;
     background-color: #cc9b6d;
     height: auto;
     h1 {
       padding: 15px;
       font-family: "Odibee Sans", cursive;
       font-size: 4rem;
-      margin: 0px 0px;
+      margin: 0;
       text-align: center;
       text-transform: uppercase;
       color: #f6e6cb;
     }
     p {
       font-size: 2rem;
-      margin: 0px 0px;
+      margin: 0;
       font-stretch: expanded;
       letter-spacing: 5px;
 
@@ -42,6 +42,7 @@ body {
   width: 100vw;
   height: 100vh;
   top: 0;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,36 +54,68 @@ body {
     rgba(128, 128, 128, 0.4) 75%,
     rgba(0, 0, 0, 0.6) 100%
   );
-  .innerContent {
-    background-color: white;
-    padding: 40px;
-    width: 80vw;
-    height: 80vh;
-    display: grid;
-    grid-template-columns: 0.6fr 1.4fr;
-    grid-template-rows: 0.2fr 1.4fr 1.4fr;
-    gap: 20px 20px;
-    grid-template-areas:
-      ". ."
-      ". ."
-      ". .";
-    .title {
-      font-size: 2rem;
-    }
-    .bookReviewName {
-      grid-row-start: 3;
-    }
-    li {
-      list-style: none;
-    }
-    img {
-      grid-row-start: 2;
+  .modalScroll {
+    background-color: rgba(22, 22, 22, 0.973);
+    border-radius: 20px;
+    padding: 20px 0;
+    .innerContent {
+      position: relative;
+      background-color: rgba(22, 22, 22, 0.973);
+      padding: 40px;
+      width: 80vw;
+      height: 80vh;
+      overflow-y: auto;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      p {
+        text-align: center;
+      }
+      .title {
+        font-size: 3rem;
+        text-decoration: underline;
+      }
+      li {
+        list-style: none;
+        text-align: center;
+      }
+      img {
+        width: 400px;
+        height: 600px;
+      }
+      a {
+        text-decoration: none;
+        color: white;
+      }
+      a:hover {
+        color: grey;
+      }
+      hr {
+        border-style: dotted;
+        border-bottom: none;
+        width: 50px;
+        border-width: 10px;
+        color: white;
+      }
+      .closeModal {
+        position: absolute;
+        right: 25px;
+        top: 25px;
+        font-size: 2rem;
+        background-color: transparent;
+        color: white;
+        border: none;
+      }
     }
   }
 }
 
 main {
   margin: auto;
+  .genreSelector {
+    margin: 20px;
+  }
   ul {
     padding: 0px;
     display: flex;
@@ -99,9 +132,17 @@ main {
       img {
         width: 400px;
         height: 600px;
+        user-select: auto;
       }
-      img:hover {
+
+      .buttonStyle {
+        background-color: transparent;
+        border: none;
+      }
+      .buttonStyle:focus,
+      .buttonStyle:hover {
         transform: scale(1.2);
+        cursor: pointer;
       }
     }
   }
@@ -120,18 +161,58 @@ main {
 }
 
 @media only screen and (max-width: 600px) {
+  .modal {
+    overflow-y: scroll;
+    .modalScroll {
+      .innerContent {
+        display: flex;
+        width: 100vw;
+        height: auto;
+        background-color: rgba(22, 22, 22, 0.973);
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow-y: auto;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+          width: 80vw;
+          height: auto;
+        }
+        .closeModal {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+        }
+      }
+    }
+  }
   main {
     ul {
       li {
         p {
         }
         img {
-          width: 200px;
-          height: 400px;
-          margin: auto;
+          width: 80vw;
+          height: auto;
+          // margin: auto;
         }
         img:hover {
           transform: scale(1);
+        }
+      }
+    }
+    div {
+      form {
+        text-align: center;
+        label {
+        }
+        select {
+          width: 85%;
+        }
+        input {
         }
       }
     }
