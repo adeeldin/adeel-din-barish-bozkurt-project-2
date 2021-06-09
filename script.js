@@ -60,14 +60,14 @@ app.searchByISBN = function (isbn) {
             return response.json()
         })
         .then(data => {
-            console.log(data);
+            // console.log(data);
             const div = document.createElement('div');
             div.classList.add('modal');
 
             div.innerHTML = `<div class="modalScroll"><div class='innerContent'>
             <button class="closeModal" onclick="app.closeModal(this)">&#10006</button>
             <p class='title'>${data['results'][0].title}</p>
-            <img src="http://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title}">
+            <img src="https://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title}">
             <ul>
                 <li>Author: ${data['results'][0].author}</li>
                 <li>Publisher: ${data['results'][0].publisher}</li>
@@ -87,14 +87,9 @@ app.searchByISBN = function (isbn) {
 
             document.querySelector('body').append(div);
 
-
-
-
-
         });
 
 }
-
 
 app.searchBooks = function (genre) {
     const populateUrl = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
@@ -107,19 +102,21 @@ app.searchBooks = function (genre) {
     //api call to populate the main page
     fetch(populateUrl)
         .then(response => {
-            return response.json()
+            if (response.ok) {
+                return response.json()
+            }
         })
         .then(data => {
             // console.log(data);
             data['results'].forEach(value => {
                 const imgEl = document.createElement('li');
                 const image = document.createElement('img'); //used to check if image has successfully loaded
-                image.src = `http://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg?default=false`
+                image.src = `https://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg?default=false`
 
                 image.onload = function () { //on a successful load of image run this function
 
                     imgEl.innerHTML = `<p>${value['book_details'][0].title}</p>
-                    <button class="buttonStyle" onclick="app.displayModal(this)"><img id = "${value['isbns'][0].isbn10}" src="http://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg" alt=""></button>`
+                    <button class="buttonStyle" onclick="app.displayModal(this)"><img id = "${value['isbns'][0].isbn10}" src="https://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg" alt=""></button>`
                     document.querySelector('.bookDisplay').append(imgEl);
                 }
 
