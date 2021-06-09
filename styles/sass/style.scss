@@ -1,10 +1,16 @@
-@import "_setup";
+@import "setup";
+@import "select";
 
 .wrapper {
   max-width: 1800px;
   width: 90%;
 }
-
+img {
+  background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 body {
   font-family: "Roboto", sans-serif;
   font-size: 125%;
@@ -84,6 +90,11 @@ body {
         width: 400px;
         height: 600px;
       }
+      .amazonPurchaseButton {
+        width: 25%;
+        height: auto;
+        background-image: none;
+      }
       a {
         text-decoration: none;
         color: white;
@@ -150,17 +161,65 @@ main {
   div {
     form {
       text-align: center;
+
       label {
       }
       select {
+        option {
+          font-size: 25px;
+        }
       }
-      input {
+      input[type="submit"] {
+        margin-left: 25px;
+        background-color: #f1d9b2;
+        border-radius: 28px;
+        display: inline-block;
+        cursor: pointer;
+        color: #000000;
+        // font-family: Arial;
+        text-transform: uppercase;
+        border: none;
+        // font-size: 22px;
+        padding: 12px 31px;
+        text-decoration: none;
+        text-shadow: 0px 0px 2px #6e6e6e;
       }
+      input[type="submit"]:hover {
+        background-color: #ebc993;
+      }
+      input[type="submit"]:active {
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+}
+footer {
+  background-color: #2a1b01;
+  padding: 25px;
+  text-align: center;
+  p {
+    color: white;
+    font-size: 1rem;
+    text-transform: uppercase;
+    a {
+      font-size: 1.25rem;
+      color: white;
+      margin: 25px;
+      text-decoration: none;
+      font-style: italic;
+    }
+    a:hover {
+      color: red;
     }
   }
 }
 
 @media only screen and (max-width: 600px) {
+  .select_arrow {
+    display: none;
+  }
+
   .modal {
     overflow-y: scroll;
     .modalScroll {
@@ -209,10 +268,27 @@ main {
         text-align: center;
         label {
         }
-        select {
-          width: 85%;
+        .select {
+          width: 100%;
         }
-        input {
+        select {
+          option {
+            font-size: 25px;
+          }
+        }
+        input[type="submit"] {
+          margin-left: 0px;
+          // font-size: 22px;
+          padding: 10px 25px;
+          text-decoration: none;
+          text-shadow: 0px 0px 1px #6e6e6e;
+        }
+        input[type="submit"]:hover {
+          background-color: #ebc993;
+        }
+        input[type="submit"]:active {
+          position: relative;
+          top: 1px;
         }
       }
     }
