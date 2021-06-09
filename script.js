@@ -1,3 +1,5 @@
+
+
 //all books api
 const generateListURL = 'https://api.nytimes.com/svc/books/v3/lists/names'; //get book genres
 const specificBookISBN = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json' //get book information using isbn number
@@ -7,7 +9,10 @@ const loadBooks = 'https://api.nytimes.com/svc/books/v3/lists.json'; //load book
 const picture = 'http://covers.openlibrary.org/b/$key/$value-$size.jpg'
 
 //our namespace
-const app = {}
+const app = {};
+
+//array to hold specific amazon urls for the books that are displayed
+app.amazonLinksArray = [];
 
 app.populateGenreOptions = function () {
     const populateUrl = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
@@ -46,7 +51,7 @@ app.populateGenreOptions = function () {
 
 }
 
-app.searchByISBN = function (isbn) {
+app.searchByISBN = function (isbn, id) {
     const isbnURL = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
     isbnURL.search = new URLSearchParams({
         reqUrl: specificBookISBN,
@@ -64,10 +69,12 @@ app.searchByISBN = function (isbn) {
             const div = document.createElement('div');
             div.classList.add('modal');
 
+
+
             div.innerHTML = `<div class="modalScroll"><div class='innerContent'>
             <button class="closeModal" onclick="app.closeModal(this)">&#10006</button>
             <p class='title'>${data['results'][0].title}</p>
-            <img src="https://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title}">
+            <img src="https://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title} by ${data['results'][0].author}">
             <ul>
                 <li>Author: ${data['results'][0].author}</li>
                 <li>Publisher: ${data['results'][0].publisher}</li>
@@ -79,6 +86,8 @@ app.searchByISBN = function (isbn) {
 
 
             ${data['results'][0]['reviews'][0]['book_review_link'] === "" ? "" : `<p class='bookReviewName'>Book Review:</p><p class='bookReviewName'> <a href="${data['results'][0]['reviews'][0]['book_review_link']}">Review Link</a>`}
+
+            <p><a href ="${app.amazonLinksArray[id]}" target="_blank"><img class="amazonPurchaseButton"src="https://mikapak.com/wp-content/uploads/2019/04/amazon-buy-now-button-1024x506-768x380.png" alt="Purchase Image for Amazon"></a></p>
             
 
 
@@ -108,18 +117,40 @@ app.searchBooks = function (genre) {
         })
         .then(data => {
             // console.log(data);
-            data['results'].forEach(value => {
+            data['results'].forEach((value, index) => {
                 const imgEl = document.createElement('li');
                 const image = document.createElement('img'); //used to check if image has successfully loaded
-                image.src = `https://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg?default=false`
 
-                image.onload = function () { //on a successful load of image run this function
+                let isISBNWorking; //holds a boolean value
 
-                    imgEl.innerHTML = `<p>${value['book_details'][0].title}</p>
-                    <button class="buttonStyle" onclick="app.displayModal(this)"><img id = "${value['isbns'][0].isbn10}" src="https://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg" alt=""></button>`
-                    document.querySelector('.bookDisplay').append(imgEl);
+                try {
+                    if (value['isbns'][0].isbn10) { //if an error does not occur then this is working
+                        isISBNWorking = true; //is true
+                    }
+                } catch {   //if an error did occur
+                    isISBNWorking = false; //this is not working 
                 }
 
+                if (isISBNWorking) { //if isISBNWorking is not true that means an isbn10 number does not exist in this object 
+                    image.src = `https://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg?default=false`
+                    app.amazonLinksArray.push(value.amazon_product_url);
+
+
+
+                    // image.addEventListener('error', function () {
+                    //     imgEl.innerHTML = `<p>${value['book_details'][0].title}</p>
+                    // <button class="buttonStyle" onclick="app.displayModal(this)" id=${index}><img id = "${value['isbns'][0].isbn10}" src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt=""></button>`
+                    //     document.querySelector('.bookDisplay').append(imgEl);
+                    // }, true); //no idea what this true does
+
+
+                    console.log(value['book_details'][0].author)
+                    imgEl.innerHTML = `<p>${value['book_details'][0].title}</p>
+                    <button class="buttonStyle" onclick="app.displayModal(this)" id=${index}><img id = "${value['isbns'][0].isbn10}" src="https://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${value['book_details'][0].title} ${value['book_details'][0].author !== '' ? `by ${value['book_details'][0].author}.` : ""}"></button>`
+                    document.querySelector('.bookDisplay').append(imgEl);
+
+
+                }
 
             })
 
@@ -130,12 +161,16 @@ app.searchBooks = function (genre) {
 
 //add event listeners
 app.addEventListeners = function () {
-    document.querySelector('input[type=submit').addEventListener('click', (event) => {
+    document.querySelector('input[type=submit').addEventListener('click', (event) => { //on submit
         document.querySelector('ul').innerHTML = ""; //clear screen 
 
-        event.preventDefault();
-        const genre = document.querySelector('#genre').value;
-        app.searchBooks(genre);
+        event.preventDefault(); //stop reload of page
+
+        app.amazonLinksArray.splice(0, app.amazonLinksArray.length);
+
+
+        const genre = document.querySelector('#genre').value; //get the current genre
+        app.searchBooks(genre); //call the api with the genre and display the books
     });
     addEventListener('click', (event) => {
         if (event.target.className === 'modal') {
@@ -152,15 +187,17 @@ app.closeModal = function (event) {
 }
 //display model pop-up on tab & click
 app.displayModal = function (event) {
-    app.searchByISBN(event.childNodes[0].id);
+    app.searchByISBN(event.childNodes[0].id, event.id); //call the search specific book api and pass the image id and the button id which will be used in the api call
 
 }
 //init function
 app.init = function () {
     app.populateGenreOptions();
     app.addEventListeners();
-    setTimeout(() => {
-        app.searchBooks('Combined Print and E-Book Fiction');
+
+
+    setTimeout(() => { //wait 1 second for everything above to run first
+        app.searchBooks('Combined Print and E-Book Fiction'); //default run on first load
     }, 1000);
 
 }
