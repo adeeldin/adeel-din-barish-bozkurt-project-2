@@ -10,7 +10,7 @@ const picture = 'http://covers.openlibrary.org/b/$key/$value-$size.jpg'
 const app = {}
 
 app.populateGenreOptions = function () {
-    const populateUrl = new URL('http://proxy.hackeryou.com'); //proxy url for cors is necessary 
+    const populateUrl = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
     populateUrl.search = new URLSearchParams({
         reqUrl: generateListURL,
         // 'params[list]': 'hardcover-fiction',
@@ -47,7 +47,7 @@ app.populateGenreOptions = function () {
 }
 
 app.searchByISBN = function (isbn) {
-    const isbnURL = new URL('http://proxy.hackeryou.com'); //proxy url for cors is necessary 
+    const isbnURL = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
     isbnURL.search = new URLSearchParams({
         reqUrl: specificBookISBN,
         'params[isbn]': isbn,
@@ -97,7 +97,7 @@ app.searchByISBN = function (isbn) {
 
 
 app.searchBooks = function (genre) {
-    const populateUrl = new URL('http://proxy.hackeryou.com'); //proxy url for cors is necessary 
+    const populateUrl = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
     populateUrl.search = new URLSearchParams({
         reqUrl: loadBooks,
         'params[list]': genre,
@@ -148,7 +148,7 @@ app.addEventListeners = function () {
 
 
 }
-app.closeModal = function(event) {
+app.closeModal = function (event) {
     // console.log(`works`)
     // console.log(event.parentNode.parentNode)
     event.parentNode.parentNode.parentNode.style.display = `none`;
