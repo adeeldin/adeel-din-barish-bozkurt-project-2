@@ -42,6 +42,25 @@ body {
       color: inherit;
     }
   }
+  .backTopButton {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 125px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 10; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #7d5a50; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 18px; /* Increase font size */
+  }
+
+  .backTopButton:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+  }
 }
 .modal {
   position: fixed;
@@ -163,6 +182,7 @@ main {
       }
       .buttonStyle:focus,
       .buttonStyle:hover {
+        will-change: transform;
         transform: scale(1.2);
         cursor: pointer;
       }
@@ -258,7 +278,9 @@ footer {
       }
     }
   }
-
+  .backTopButton {
+    display: none !important;
+  }
   main {
     ul {
       padding-left: 0px;

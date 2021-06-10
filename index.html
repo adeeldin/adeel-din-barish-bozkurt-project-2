@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title></title>
+  <title>Book-Times</title>
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
@@ -19,37 +19,45 @@
     <p>Search the new york times best seller database</p>
   </header>
 
+  <!-- button used to go back to top of page -->
+  <button class="backTopButton" onclick="app.topFunction()" id="myBtn" title="Go to top">Top</button>
+
+
   <main class="wrapper">
+
     <div>
+
       <form class="genreSelector" action="">
+
         <label class="sr-only" for="genre">Search the new york times best seller database</label>
+
         <div class='select'>
           <select name=" genre" id="genre"></select>
           <div class="select_arrow">
           </div>
         </div>
+
         <input type="submit" value="search" />
       </form>
+
     </div>
+
     <!-- Our loading animation container -->
     <div class="loadingAnimation">
       <img src="./images/loader.gif" alt="">
     </div>
 
+
     <ul class="bookDisplay">
-      <!-- <li>
-                <p>title</p>
-                <img src="http://covers.openlibrary.org/b/ISBN/-0553391925-L.jpg" alt="">
-            </li>
-             -->
+      <!-- Books will get appendedd here -->
     </ul>
   </main>
+
 
   <footer>
     <p>Made by <a href="https://www.linkedin.com/in/adeeldin">Adeel Din</a> and
       <a href="http://www.bbozkurt.com">Barish Bozkurt</a> students of <a href="https://junocollege.com">juno college
     </p>
-
   </footer>
 
   <script src="script.js"></script>
