@@ -11,6 +11,9 @@ const picture = 'http://covers.openlibrary.org/b/$key/$value-$size.jpg'
 //our namespace
 const app = {};
 
+
+app.loadingAnimation = document.querySelector('.loadingAnimation');
+
 //array to hold specific amazon urls for the books that are displayed
 app.amazonLinksArray = [];
 
@@ -26,7 +29,14 @@ app.populateGenreOptions = function () {
     //api call to populate genre section
     fetch(populateUrl)
         .then(response => {
-            return response.json()
+            if (response.ok) { //if response okay continue
+                return response.json()
+            } else { //if response is not good restart init
+                setTimeout(() => {
+                    app.init();
+                }, 5000); //5 second wait
+            }
+
         })
         .then(data => {
             const sortedArray = [];
@@ -48,7 +58,6 @@ app.populateGenreOptions = function () {
 
 
         });
-
 }
 
 app.searchByISBN = function (isbn, id) {
@@ -101,6 +110,7 @@ app.searchByISBN = function (isbn, id) {
 }
 
 app.searchBooks = function (genre) {
+    app.loadingAnimation.style.display = 'flex';
     const populateUrl = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
     populateUrl.search = new URLSearchParams({
         reqUrl: loadBooks,
@@ -144,7 +154,7 @@ app.searchBooks = function (genre) {
                     // }, true); //no idea what this true does
 
 
-                    console.log(value['book_details'][0].author)
+                    // console.log(value['book_details'][0].author)
                     imgEl.innerHTML = `<p>${value['book_details'][0].title}</p>
                     <button class="buttonStyle" onclick="app.displayModal(this)" id=${index}><img id = "${value['isbns'][0].isbn10}" src="https://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${value['book_details'][0].title} ${value['book_details'][0].author !== '' ? `by ${value['book_details'][0].author}.` : ""}"></button>`
                     document.querySelector('.bookDisplay').append(imgEl);
@@ -154,7 +164,7 @@ app.searchBooks = function (genre) {
 
             })
 
-
+            app.loadingAnimation.style.display = 'none';
         });
 
 }
@@ -194,6 +204,7 @@ app.displayModal = function (event) {
 app.init = function () {
     app.populateGenreOptions();
     app.addEventListeners();
+    app.loadingAnimation.style.display = 'none';
 
 
     setTimeout(() => { //wait 1 second for everything above to run first

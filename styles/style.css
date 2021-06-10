@@ -472,9 +472,21 @@ body header a {
 
 main {
   margin: auto;
+  min-height: calc(100vh - 250px);
 }
 main .genreSelector {
   margin: 20px;
+}
+main .loadingAnimation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+main .loadingAnimation img {
+  background-image: none;
 }
 main ul {
   padding: 0px;
@@ -598,6 +610,10 @@ footer p a:hover {
     position: absolute;
     right: 10px;
     top: 10px;
+  }
+
+  header p {
+    padding-bottom: 25px;
   }
 
   main ul li img {

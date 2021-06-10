@@ -124,8 +124,16 @@ body {
 
 main {
   margin: auto;
+  min-height: calc(100vh - 250px);
   .genreSelector {
     margin: 20px;
+  }
+  .loadingAnimation {
+    display: flex;
+    justify-content: center;
+    img {
+      background-image: none;
+    }
   }
   ul {
     padding: 0px;
@@ -246,6 +254,13 @@ footer {
           top: 10px;
         }
       }
+    }
+  }
+  header {
+    h1 {
+    }
+    p {
+      padding-bottom: 25px;
     }
   }
   main {
