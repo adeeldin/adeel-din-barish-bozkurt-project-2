@@ -377,6 +377,7 @@ body header p {
   margin: 0;
   font-stretch: expanded;
   letter-spacing: 5px;
+  padding-bottom: 15px;
   text-align: center;
   text-transform: uppercase;
   color: #f6e6cb;
@@ -425,6 +426,9 @@ body header a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+.modal .modalScroll .innerContent ul {
+  padding-left: 0px;
 }
 .modal .modalScroll .innerContent p {
   text-align: center;
@@ -581,30 +585,24 @@ footer p a:hover {
   .modal {
     overflow-y: scroll;
   }
+  .modal .modalScroll {
+    border-radius: 0px;
+  }
   .modal .modalScroll .innerContent {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    width: 100vw;
-    height: auto;
-    background-color: rgba(22, 22, 22, 0.973);
-    padding: 0;
     width: 100vw;
     height: 100vh;
-    overflow-y: auto;
-    border-radius: 0;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    padding: 10px;
+    border-radius: 0px;
   }
   .modal .modalScroll .innerContent img {
     width: 80vw;
     height: auto;
+  }
+  .modal .modalScroll .innerContent .amazonPurchaseButton {
+    width: 50%;
+  }
+  .modal .modalScroll .innerContent .amazonButton {
+    margin-bottom: 0px;
   }
   .modal .modalScroll .innerContent .closeModal {
     position: absolute;
@@ -612,10 +610,9 @@ footer p a:hover {
     top: 10px;
   }
 
-  header p {
-    padding-bottom: 25px;
+  main ul {
+    padding-left: 0px;
   }
-
   main ul li img {
     width: 80vw;
     height: auto;

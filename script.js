@@ -94,9 +94,9 @@ app.searchByISBN = function (isbn, id) {
             <p>${data['results'][0].description}</p>
 
 
-            ${data['results'][0]['reviews'][0]['book_review_link'] === "" ? "" : `<p class='bookReviewName'>Book Review:</p><p class='bookReviewName'> <a href="${data['results'][0]['reviews'][0]['book_review_link']}">Review Link</a>`}
+            ${data['results'][0]['reviews'][0]['book_review_link'] === "" ? "" : `<p class='bookReviewName'> <a href="${data['results'][0]['reviews'][0]['book_review_link']}" target="_blank">Click Here For Review</a>`}
 
-            <p><a href ="${app.amazonLinksArray[id]}" target="_blank"><img class="amazonPurchaseButton"src="https://mikapak.com/wp-content/uploads/2019/04/amazon-buy-now-button-1024x506-768x380.png" alt="Purchase Image for Amazon"></a></p>
+            <p class="amazonButton"><a href ="${app.amazonLinksArray[id]}" target="_blank"><img class="amazonPurchaseButton"src="https://mikapak.com/wp-content/uploads/2019/04/amazon-buy-now-button-1024x506-768x380.png" alt="Purchase Image for Amazon"></a></p>
             
 
 
