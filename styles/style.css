@@ -281,9 +281,77 @@ html {
   /* added line */
 }
 
+.select {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+  width: 50%;
+}
+
+.select select {
+  font-family: "Arial";
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  padding: 12px 20px;
+  outline: 0;
+  border: 0px solid #000000;
+  border-radius: 19px;
+  background: #f1d9b2;
+  color: #000000;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.select select::-ms-expand {
+  display: none;
+}
+
+.select select:hover,
+.select select:focus {
+  color: #000000;
+  background: #ebc993;
+}
+
+.select select:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.select_arrow {
+  position: absolute;
+  top: 11px;
+  right: 19px;
+  width: 14px;
+  height: 14px;
+  border: solid #7b7b7b;
+  border-width: 0 4px 4px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.select select:hover ~ .select_arrow,
+.select select:focus ~ .select_arrow {
+  border-color: #000000;
+}
+
+.select select:disabled ~ .select_arrow {
+  border-top-color: #cccccc;
+}
+
 .wrapper {
   max-width: 1800px;
   width: 90%;
+}
+
+img {
+  background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 body {
@@ -373,6 +441,11 @@ body header a {
   width: 400px;
   height: 600px;
 }
+.modal .modalScroll .innerContent .amazonPurchaseButton {
+  width: 25%;
+  height: auto;
+  background-image: none;
+}
 .modal .modalScroll .innerContent a {
   text-decoration: none;
   color: white;
@@ -443,7 +516,56 @@ main ul li .buttonStyle:hover {
 main div form {
   text-align: center;
 }
+main div form select option {
+  font-size: 25px;
+}
+main div form input[type=submit] {
+  margin-left: 25px;
+  background-color: #f1d9b2;
+  border-radius: 28px;
+  display: inline-block;
+  cursor: pointer;
+  color: #000000;
+  text-transform: uppercase;
+  border: none;
+  padding: 12px 31px;
+  text-decoration: none;
+  text-shadow: 0px 0px 2px #6e6e6e;
+}
+main div form input[type=submit]:hover {
+  background-color: #ebc993;
+}
+main div form input[type=submit]:active {
+  position: relative;
+  top: 1px;
+}
+
+footer {
+  background-color: #2a1b01;
+  padding: 25px;
+  text-align: center;
+}
+footer p {
+  color: white;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+footer p a {
+  font-size: 1.25rem;
+  color: white;
+  margin: 25px;
+  text-decoration: none;
+  font-style: italic;
+}
+footer p a:hover {
+  color: red;
+}
+
 @media only screen and (max-width: 600px) {
+  .select_arrow {
+    display: none;
+  }
+
   .modal {
     overflow-y: scroll;
   }
@@ -489,7 +611,23 @@ main div form {
   main div form {
     text-align: center;
   }
-  main div form select {
-    width: 85%;
+  main div form .select {
+    width: 100%;
+  }
+  main div form select option {
+    font-size: 25px;
+  }
+  main div form input[type=submit] {
+    margin-left: 0px;
+    padding: 10px 25px;
+    text-decoration: none;
+    text-shadow: 0px 0px 1px #6e6e6e;
+  }
+  main div form input[type=submit]:hover {
+    background-color: #ebc993;
+  }
+  main div form input[type=submit]:active {
+    position: relative;
+    top: 1px;
   }
 }
