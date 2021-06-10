@@ -377,12 +377,45 @@ body header p {
   margin: 0;
   font-stretch: expanded;
   letter-spacing: 5px;
+  padding-bottom: 15px;
   text-align: center;
   text-transform: uppercase;
   color: #f6e6cb;
 }
 body header a {
   color: inherit;
+}
+body .backTopButton {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Fixed/sticky position */
+  bottom: 125px;
+  /* Place the button at the bottom of the page */
+  right: 30px;
+  /* Place the button 30px from the right */
+  z-index: 10;
+  /* Make sure it does not overlap */
+  border: none;
+  /* Remove borders */
+  outline: none;
+  /* Remove outline */
+  background-color: #7d5a50;
+  /* Set a background color */
+  color: white;
+  /* Text color */
+  cursor: pointer;
+  /* Add a mouse pointer on hover */
+  padding: 15px;
+  /* Some padding */
+  border-radius: 10px;
+  /* Rounded corners */
+  font-size: 18px;
+  /* Increase font size */
+}
+body .backTopButton:hover {
+  background-color: #555;
+  /* Add a dark-grey background on hover */
 }
 
 .modal {
@@ -425,6 +458,9 @@ body header a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+.modal .modalScroll .innerContent ul {
+  padding-left: 0px;
 }
 .modal .modalScroll .innerContent p {
   text-align: center;
@@ -472,9 +508,21 @@ body header a {
 
 main {
   margin: auto;
+  min-height: calc(100vh - 250px);
 }
 main .genreSelector {
   margin: 20px;
+}
+main .loadingAnimation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+main .loadingAnimation img {
+  background-image: none;
 }
 main ul {
   padding: 0px;
@@ -509,6 +557,7 @@ main ul li .buttonStyle {
 }
 main ul li .buttonStyle:focus,
 main ul li .buttonStyle:hover {
+  will-change: transform;
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
   cursor: pointer;
@@ -569,30 +618,24 @@ footer p a:hover {
   .modal {
     overflow-y: scroll;
   }
+  .modal .modalScroll {
+    border-radius: 0px;
+  }
   .modal .modalScroll .innerContent {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    width: 100vw;
-    height: auto;
-    background-color: rgba(22, 22, 22, 0.973);
-    padding: 0;
     width: 100vw;
     height: 100vh;
-    overflow-y: auto;
-    border-radius: 0;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    padding: 10px;
+    border-radius: 0px;
   }
   .modal .modalScroll .innerContent img {
     width: 80vw;
     height: auto;
+  }
+  .modal .modalScroll .innerContent .amazonPurchaseButton {
+    width: 50%;
+  }
+  .modal .modalScroll .innerContent .amazonButton {
+    margin-bottom: 0px;
   }
   .modal .modalScroll .innerContent .closeModal {
     position: absolute;
@@ -600,6 +643,13 @@ footer p a:hover {
     top: 10px;
   }
 
+  .backTopButton {
+    display: none !important;
+  }
+
+  main ul {
+    padding-left: 0px;
+  }
   main ul li img {
     width: 80vw;
     height: auto;
