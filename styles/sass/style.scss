@@ -175,6 +175,9 @@ body {
         color: white;
         border: none;
       }
+      .closeModal:hover {
+        color: #f6e6cb;
+      }
     }
   }
 }
@@ -284,8 +287,8 @@ main {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background: url("https://static.tumblr.com/8x9m588/C8ho55ylx/bg-wood2.png");
-  background-size: 85%;
+  // background: url("https://static.tumblr.com/8x9m588/C8ho55ylx/bg-wood2.png");
+  // background-size: 85%;
   border-left: 10px solid #9a8548;
   border-right: 10px solid #9a8548;
   border-top: 10px solid #9a8548;
@@ -293,7 +296,7 @@ main {
     border-top: 10px solid #9a8548;
   }
   li {
-    width: calc(65% / 5);
+    width: calc(65% / 4.5);
     height: auto;
     margin: 30px 10px;
     button {
@@ -305,6 +308,8 @@ main {
     }
   }
 }
+@import "listBackground";
+
 footer {
   background-color: #2a1b01;
   padding: 25px;
@@ -411,7 +416,7 @@ footer {
   }
   .userList {
     li {
-      width: calc(75% / 3);
+      width: calc(35%);
       margin: 12px 0;
     }
   }

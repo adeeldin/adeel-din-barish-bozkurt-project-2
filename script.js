@@ -150,7 +150,7 @@ app.searchByISBN = function (isbn, id) {
 
                 //div inner content is replaced with the necessary information from the api return to create the modal
                 div.innerHTML = `<div class="modalScroll"><div class='innerContent'>
-            <button class="closeModal" onclick="app.closeModal(this)">&#10006</button>
+            <button class="closeModal" onclick="app.closeModal(this)">X</button>
             <p class='title'>${data['results'][0].title}</p>
             <img id = "${data['results'][0]['isbns'][0].isbn10}" src="https://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title} by ${data['results'][0].author}">
             <ul>
