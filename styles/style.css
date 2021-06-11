@@ -342,6 +342,12 @@ html {
   border-top-color: #cccccc;
 }
 
+.book::after,
+.book::before, .book button, .book {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 .wrapper {
   max-width: 1800px;
   width: 90%;
@@ -664,6 +670,7 @@ main .booksIcon {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0px;
   border-left: 10px solid #9a8548;
   border-right: 10px solid #9a8548;
   border-top: 10px solid #9a8548;
@@ -672,16 +679,17 @@ main .booksIcon {
   border-top: 10px solid #9a8548;
 }
 .userList li {
-  width: calc(65% / 4.5);
-  height: auto;
+  width: 225px;
+  height: 335px;
   margin: 30px 10px;
+  padding: 0px;
 }
 .userList li button {
-  width: 100%;
+  padding: 0px;
 }
 .userList li button img {
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 
 .userList {
@@ -708,6 +716,76 @@ footer p a {
 }
 footer p a:hover {
   color: #8f0707;
+}
+
+.book {
+  display: block;
+  width: 125px;
+  height: 200px;
+  margin-bottom: 0px;
+  position: relative;
+  background: white;
+  z-index: 0;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 9px 20px 0 rgba(0, 0, 0, 0.25);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 9px 20px 0 rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  -webkit-transition: -webkit-box-shadow 0.3s linear;
+  transition: -webkit-box-shadow 0.3s linear;
+  transition: box-shadow 0.3s linear;
+  transition: box-shadow 0.3s linear, -webkit-box-shadow 0.3s linear;
+}
+
+.book button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  height: auto;
+  z-index: 10;
+  -webkit-transform-origin: 0 50%;
+          transform-origin: 0 50%;
+  -webkit-transform: rotateY(0);
+          transform: rotateY(0);
+  -webkit-transition: all 0.45s ease;
+  transition: all 0.45s ease;
+}
+
+.book:hover {
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 9px 20px 0 rgba(0, 0, 0, 0.45);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 9px 20px 0 rgba(0, 0, 0, 0.45);
+}
+.book:hover button {
+  -webkit-transform: rotateY(-27deg);
+          transform: rotateY(-27deg);
+  -webkit-box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.4);
+          box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.4);
+}
+
+.book button:focus {
+  -webkit-transform: rotateY(-27deg);
+          transform: rotateY(-27deg);
+  -webkit-box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.4);
+          box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.4);
+}
+
+.book::after,
+.book::before {
+  content: "";
+  display: block;
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  z-index: -10;
+  top: 0;
+  background: white;
+  border: 1px solid #d9d9d9;
+}
+
+.book::before {
+  left: -4px;
+}
+
+.book::after {
+  left: -8px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -789,7 +867,8 @@ footer p a:hover {
   }
 
   .userList li {
-    width: calc(35%);
-    margin: 12px 0;
+    width: 175px;
+    height: 260px;
+    margin: 12px;
   }
 }

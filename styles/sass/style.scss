@@ -1,6 +1,16 @@
 @import "setup";
 @import "select";
 
+$color-bg: #fde3a7;
+$book-color-bg: lighten($color-bg, 20%);
+$book-color-border: lighten(#000, 85%);
+$book-border: 1px solid $book-color-border;
+
+%book-rounded-corners {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 .wrapper {
   max-width: 1800px;
   width: 90%;
@@ -16,7 +26,6 @@ body {
   font-size: 125%;
   background-color: #f9f7f7;
   header {
-    // width: 100vw;
     background-color: #cc9b6d;
     height: auto;
     h1 {
@@ -287,8 +296,7 @@ main {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  // background: url("https://static.tumblr.com/8x9m588/C8ho55ylx/bg-wood2.png");
-  // background-size: 85%;
+  padding: 0px;
   border-left: 10px solid #9a8548;
   border-right: 10px solid #9a8548;
   border-top: 10px solid #9a8548;
@@ -296,14 +304,21 @@ main {
     border-top: 10px solid #9a8548;
   }
   li {
-    width: calc(65% / 4.5);
-    height: auto;
+    // width: calc(65% / 4.5);
+    // height: 100%;
+    width: 225px;
+    height: 335px;
     margin: 30px 10px;
+    padding: 0px;
+    // background-color: transparent;
+
     button {
-      width: 100%;
+      // width: 100%;
+      padding: 0px;
+
       img {
         width: 100%;
-        height: auto;
+        height: 100%;
       }
     }
   }
@@ -330,6 +345,74 @@ footer {
     }
   }
 }
+
+//
+
+.book {
+  @extend %book-rounded-corners;
+  display: block;
+  width: 125px;
+  height: 200px;
+  margin-bottom: 0px;
+  position: relative;
+  background: $book-color-bg;
+  z-index: 0;
+  box-shadow: 0 2px 4px 0 rgba(#000, 0.1), 0 9px 20px 0 rgba(#000, 0.25);
+  overflow: hidden;
+  transition: box-shadow 0.3s linear;
+}
+
+.book button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  @extend %book-rounded-corners;
+  height: auto;
+  z-index: 10;
+  transform-origin: 0 50%;
+  transform: rotateY(0);
+  transition: all 0.45s ease;
+}
+
+.book:hover {
+  box-shadow: 0 2px 4px 0 rgba(#000, 0.25), 0 9px 20px 0 rgba(#000, 0.45);
+  button {
+    transform: rotateY(-27deg);
+    box-shadow: 1px 1px 5px 5px rgba(#000, 0.4);
+  }
+}
+
+.book {
+  button:focus {
+    transform: rotateY(-27deg);
+    box-shadow: 1px 1px 5px 5px rgba(#000, 0.4);
+  }
+}
+
+.book::after,
+.book::before {
+  @extend %book-rounded-corners;
+  content: "";
+  display: block;
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  z-index: -10;
+  top: 0;
+  background: $book-color-bg;
+  border: $book-border;
+}
+
+.book::before {
+  left: -4px;
+}
+.book::after {
+  left: -8px;
+}
+
+//
+
 @media only screen and (max-width: 600px) {
   .select_arrow {
     display: none;
@@ -382,8 +465,6 @@ footer {
     div {
       form {
         text-align: center;
-        label {
-        }
         .select {
           width: 100%;
         }
@@ -416,8 +497,9 @@ footer {
   }
   .userList {
     li {
-      width: calc(35%);
-      margin: 12px 0;
+      width: 175px;
+      height: 260px;
+      margin: 12px;
     }
   }
 }
