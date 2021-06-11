@@ -86,7 +86,6 @@ body {
     padding: 20px 0;
     .innerContent {
       position: relative;
-      background-color: rgba(22, 22, 22, 0.973);
       padding: 40px;
       width: 80vw;
       height: 80vh;
@@ -113,6 +112,48 @@ body {
         width: 400px;
         height: 600px;
       }
+      #listButton {
+        line-height: 40px;
+        padding: 0;
+        background: transparent;
+        position: relative;
+        z-index: 2;
+        color: rgb(0, 0, 0);
+        -webkit-perspective: 300px;
+        perspective: 300px;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        padding: 5px 10px;
+      }
+      #listButton:hover {
+        color: #f6e6cb;
+      }
+      #listButton:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #f6e6cb;
+        z-index: -1;
+        -webkit-transform-origin: center bottom;
+        transform-origin: center bottom;
+        -webkit-transform: rotateX(0);
+        transform: rotateX(0);
+        transition: all 0.3s ease;
+      }
+      #listButton:hover:after {
+        -webkit-transform: rotateX(-180deg);
+        transform: rotateX(-180deg);
+      }
+      hr {
+        border-style: dotted;
+        border-bottom: none;
+        width: 50px;
+        border-width: 10px;
+        color: white;
+      }
       .amazonPurchaseButton {
         width: 25%;
         height: auto;
@@ -124,13 +165,6 @@ body {
       }
       a:hover {
         color: grey;
-      }
-      hr {
-        border-style: dotted;
-        border-bottom: none;
-        width: 50px;
-        border-width: 10px;
-        color: white;
       }
       .closeModal {
         position: absolute;
@@ -222,10 +256,8 @@ main {
         display: inline-block;
         cursor: pointer;
         color: #000000;
-        // font-family: Arial;
         text-transform: uppercase;
         border: none;
-        // font-size: 22px;
         padding: 12px 31px;
         text-decoration: none;
         text-shadow: 0px 0px 2px #6e6e6e;
@@ -236,6 +268,42 @@ main {
       input[type="submit"]:active {
         position: relative;
         top: 1px;
+      }
+    }
+  }
+  .booksIcon {
+    width: 6%;
+    display: flex;
+    background-image: none;
+    opacity: 0.5;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+}
+.userList {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background: url("https://static.tumblr.com/8x9m588/C8ho55ylx/bg-wood2.png");
+  border-left: 10px solid #9a8548;
+  border-right: 10px solid #9a8548;
+  border-top: 10px solid #9a8548;
+  &:first-of-type {
+    border-top: 10px solid #9a8548;
+  }
+  li {
+    width: calc(59% / 6);
+    height: auto;
+    margin: 25px 10px;
+    button {
+      // background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");
+      img {
+        width: 100%;
+        height: auto;
       }
     }
   }
@@ -256,27 +324,7 @@ footer {
       font-style: italic;
     }
     a:hover {
-      color: red;
-    }
-  }
-}
-.userList {
-  padding: 0px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(252, 222, 192, 0.3);
-  border-radius: 25px;
-  li {
-    width: calc(100% / 6);
-    height: auto;
-    button {
-      // background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");
-      img {
-        width: 100%;
-        height: auto;
-      }
+      color: rgb(143, 7, 7);
     }
   }
 }
@@ -293,6 +341,7 @@ footer {
         width: 100vw;
         height: 100vh;
         padding: 10px;
+        margin: 25px 10px;
         border-radius: 0px;
         img {
           width: 80vw;
@@ -357,10 +406,14 @@ footer {
         }
       }
     }
+    .booksIcon {
+      width: 20%;
+    }
   }
   .userList {
     li {
-      width: calc(100% / 3);
+      width: calc(78% / 3);
+      margin: 15px 5px;
 
       button {
         // background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");

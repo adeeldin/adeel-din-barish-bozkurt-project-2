@@ -442,7 +442,6 @@ body .backTopButton:hover {
 }
 .modal .modalScroll .innerContent {
   position: relative;
-  background-color: rgba(22, 22, 22, 0.973);
   padding: 40px;
   width: 80vw;
   height: 80vh;
@@ -477,6 +476,49 @@ body .backTopButton:hover {
   width: 400px;
   height: 600px;
 }
+.modal .modalScroll .innerContent #listButton {
+  line-height: 40px;
+  padding: 0;
+  background: transparent;
+  position: relative;
+  z-index: 2;
+  color: black;
+  -webkit-perspective: 300px;
+  perspective: 300px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  padding: 5px 10px;
+}
+.modal .modalScroll .innerContent #listButton:hover {
+  color: #f6e6cb;
+}
+.modal .modalScroll .innerContent #listButton:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f6e6cb;
+  z-index: -1;
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+  -webkit-transform: rotateX(0);
+  transform: rotateX(0);
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.modal .modalScroll .innerContent #listButton:hover:after {
+  -webkit-transform: rotateX(-180deg);
+  transform: rotateX(-180deg);
+}
+.modal .modalScroll .innerContent hr {
+  border-style: dotted;
+  border-bottom: none;
+  width: 50px;
+  border-width: 10px;
+  color: white;
+}
 .modal .modalScroll .innerContent .amazonPurchaseButton {
   width: 25%;
   height: auto;
@@ -488,13 +530,6 @@ body .backTopButton:hover {
 }
 .modal .modalScroll .innerContent a:hover {
   color: grey;
-}
-.modal .modalScroll .innerContent hr {
-  border-style: dotted;
-  border-bottom: none;
-  width: 50px;
-  border-width: 10px;
-  color: white;
 }
 .modal .modalScroll .innerContent .closeModal {
   position: absolute;
@@ -601,6 +636,49 @@ main div form input[type=submit]:active {
   position: relative;
   top: 1px;
 }
+main .booksIcon {
+  width: 6%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-image: none;
+  opacity: 0.5;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.userList {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: url("https://static.tumblr.com/8x9m588/C8ho55ylx/bg-wood2.png");
+  border-left: 10px solid #9a8548;
+  border-right: 10px solid #9a8548;
+  border-top: 10px solid #9a8548;
+}
+.userList:first-of-type {
+  border-top: 10px solid #9a8548;
+}
+.userList li {
+  width: calc(59% / 6);
+  height: auto;
+  margin: 25px 10px;
+}
+.userList li button img {
+  width: 100%;
+  height: auto;
+}
 
 footer {
   background-color: #2a1b01;
@@ -620,32 +698,7 @@ footer p a {
   font-style: italic;
 }
 footer p a:hover {
-  color: red;
-}
-
-.userList {
-  padding: 0px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: rgba(252, 222, 192, 0.3);
-  border-radius: 25px;
-}
-.userList li {
-  width: calc(100% / 6);
-  height: auto;
-}
-.userList li button img {
-  width: 100%;
-  height: auto;
+  color: #8f0707;
 }
 
 @media only screen and (max-width: 600px) {
@@ -663,6 +716,7 @@ footer p a:hover {
     width: 100vw;
     height: 100vh;
     padding: 10px;
+    margin: 25px 10px;
     border-radius: 0px;
   }
   .modal .modalScroll .innerContent img {
@@ -718,8 +772,12 @@ footer p a:hover {
     position: relative;
     top: 1px;
   }
+  main .booksIcon {
+    width: 20%;
+  }
 
   .userList li {
-    width: calc(100% / 3);
+    width: calc(78% / 3);
+    margin: 15px 5px;
   }
 }
