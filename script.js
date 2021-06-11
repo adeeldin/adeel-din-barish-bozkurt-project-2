@@ -154,7 +154,7 @@ app.searchByISBN = function (isbn, id) {
                 let inArray;
 
                 if (app.dataBase.includes(booklink)) {
-                    console.log('In array');
+                    // console.log('In array');
                     inArray = true;
                 } else {
                     console.log('not in array')

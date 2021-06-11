@@ -289,6 +289,7 @@ main {
   justify-content: center;
   align-items: center;
   background: url("https://static.tumblr.com/8x9m588/C8ho55ylx/bg-wood2.png");
+  background-size: 85%;
   border-left: 10px solid #9a8548;
   border-right: 10px solid #9a8548;
   border-top: 10px solid #9a8548;
@@ -296,10 +297,11 @@ main {
     border-top: 10px solid #9a8548;
   }
   li {
-    width: calc(59% / 6);
+    width: calc(65% / 5);
     height: auto;
-    margin: 25px 10px;
+    margin: 30px 10px;
     button {
+      width: 100%;
       // background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");
       img {
         width: 100%;
@@ -341,7 +343,7 @@ footer {
         width: 100vw;
         height: 100vh;
         padding: 10px;
-        margin: 25px 10px;
+        margin: 25px 0 25px 0;
         border-radius: 0px;
         img {
           width: 80vw;
@@ -412,8 +414,8 @@ footer {
   }
   .userList {
     li {
-      width: calc(78% / 3);
-      margin: 15px 5px;
+      width: calc(75% / 3);
+      margin: 12px 0;
 
       button {
         // background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");
