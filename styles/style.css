@@ -643,8 +643,7 @@ main .booksIcon {
   display: flex;
   background-image: none;
   opacity: 0.5;
-  margin: 0 auto;
-  margin-bottom: 20px;
+  margin: 50px auto 20px auto;
 }
 
 .userList {
@@ -778,6 +777,9 @@ footer p a:hover {
   }
   main .booksIcon {
     width: 20%;
+  }
+  main .booksIcon {
+    margin: 0px auto 20px auto;
   }
 
   .userList li {
