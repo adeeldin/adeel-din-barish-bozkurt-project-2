@@ -241,9 +241,6 @@ main {
   div {
     form {
       text-align: center;
-
-      label {
-      }
       select {
         option {
           font-size: 25px;
@@ -276,8 +273,7 @@ main {
     display: flex;
     background-image: none;
     opacity: 0.5;
-    margin: 0 auto;
-    margin-bottom: 20px;
+    margin: 50px auto 20px auto;
   }
 }
 .userList {
@@ -302,7 +298,6 @@ main {
     margin: 30px 10px;
     button {
       width: 100%;
-      // background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");
       img {
         width: 100%;
         height: auto;
@@ -334,7 +329,6 @@ footer {
   .select_arrow {
     display: none;
   }
-
   .modal {
     overflow-y: scroll;
     .modalScroll {
@@ -411,17 +405,14 @@ footer {
     .booksIcon {
       width: 20%;
     }
+    .booksIcon {
+      margin: 0px auto 20px auto;
+    }
   }
   .userList {
     li {
       width: calc(75% / 3);
       margin: 12px 0;
-
-      button {
-        // background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");
-        img {
-        }
-      }
     }
   }
 }
