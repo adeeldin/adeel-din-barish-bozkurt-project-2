@@ -679,8 +679,8 @@ main .booksIcon {
   border-top: 10px solid #9a8548;
 }
 .userList li {
-  width: 225px;
-  height: 335px;
+  width: 195px;
+  height: 285px;
   margin: 30px 10px;
   padding: 0px;
 }
@@ -867,8 +867,8 @@ footer p a:hover {
   }
 
   .userList li {
-    width: 175px;
-    height: 260px;
+    width: 100px;
+    height: 150px;
     margin: 12px;
   }
 }
