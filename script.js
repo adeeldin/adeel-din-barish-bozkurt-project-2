@@ -144,7 +144,6 @@ app.searchByISBN = function (isbn, id) {
                 if (app.dataBase.includes(booklink)) { //used by ternary operator below to show add to list or remove from list
                     inArray = true;
                 } else {
-                    console.log('not in array')
                     inArray = false;
                 }
 
