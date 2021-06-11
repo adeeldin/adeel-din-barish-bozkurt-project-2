@@ -1,112 +1,232 @@
-
-
-//all books api
-const generateListURL = 'https://api.nytimes.com/svc/books/v3/lists/names'; //get book genres
-const specificBookISBN = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json' //get book information using isbn number
-const loadBooks = 'https://api.nytimes.com/svc/books/v3/lists.json'; //load books using genre
-
-//cover picture needs key value and size
-const picture = 'http://covers.openlibrary.org/b/$key/$value-$size.jpg'
-
 //our namespace
 const app = {};
+
+//all books api
+app.generateListURL = 'https://api.nytimes.com/svc/books/v3/lists/names'; //get book genres
+app.specificBookISBN = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json' //get book information using isbn number
+app.loadBooks = 'https://api.nytimes.com/svc/books/v3/lists.json'; //load books using genre
+app.apiKey = 'VGnDGaD8A3qh1qSrqo0ppSGLHoMcom3T'; //our api key
+
+
+//loading animation selector
+app.loadingAnimation = document.querySelector('.loadingAnimation');
 
 //array to hold specific amazon urls for the books that are displayed
 app.amazonLinksArray = [];
 
+
+//  FIREBASE STUFF 
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCB-dt5NQe-wMgm8ZmhJMNElBzMNPyPOuE",
+    authDomain: "book-times.firebaseapp.com",
+    databaseURL: "https://book-times-default-rtdb.firebaseio.com",
+    projectId: "book-times",
+    storageBucket: "book-times.appspot.com",
+    messagingSenderId: "40201210281",
+    appId: "1:40201210281:web:7c0bac1ad77694a8c0dcb8"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+//call firebase database and put reference in variable
+const dbRef = firebase.database().ref();
+
+app.dataBase = []; //array to hold database content
+app.dataBaseKey = []; //array to hold database keys
+
+dbRef.on('value', data => {
+
+    const toDoData = data.val(); //assign data
+
+    app.dataBase.splice(0, app.dataBase.length); //reset array
+    app.dataBaseKey.splice(0, app.dataBaseKey.length); //reset array
+
+    for (let toDo in toDoData) {
+        // console.log(toDoData[toDo]);
+        // console.log(toDo);
+        // console.log(toDoDat);
+        app.dataBase.push(toDoData[toDo]);
+        app.dataBaseKey.push(toDo);
+    }
+
+    document.querySelector('.userList').innerHTML = '';
+    app.displayList();
+})
+
+//  FIREBASE STUFF
+//display list
+app.displayList = function () {
+    const listHeading = document.querySelectorAll('.userListHeading'); //get headings
+    listHeading.forEach(value => { //for each heading hide
+        value.style.display = 'none';
+
+    })
+
+    document.querySelector('.userList').innerHTML = ''; //empty list ons screen
+
+    app.dataBase.forEach(value => {
+        listHeading.forEach(value => {
+            value.style.display = 'block';
+        })
+        const li = document.createElement('li');
+        li.innerHTML = `<button class="buttonStyle" onclick="app.displayModal(this)">${value}</button>`;
+
+        document.querySelector('.userList').append(li);
+    })
+}
+
+
+//function used to populate the select option 
 app.populateGenreOptions = function () {
     const populateUrl = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
     populateUrl.search = new URLSearchParams({
-        reqUrl: generateListURL,
-        // 'params[list]': 'hardcover-fiction',
-        'params[api-key]': 'VGnDGaD8A3qh1qSrqo0ppSGLHoMcom3T' //api key
-        // 'proxyHeaders[Some-Header]': 'goes here',
+        reqUrl: app.generateListURL,
+        'params[api-key]': app.apiKey //api key
+
     });
 
     //api call to populate genre section
     fetch(populateUrl)
         .then(response => {
-            return response.json()
+            if (response.ok) { //if response okay continue
+                return response.json()
+            } else { //if response is not good restart init
+                setTimeout(() => {
+                    app.init();
+                }, 5000); //5 second wait
+            }
+
         })
         .then(data => {
-            const sortedArray = [];
+            const sortedArray = []; //array that will be used to sort our returns
 
             data['results'].forEach((value) => {
-                sortedArray.push(value.list_name);
+                sortedArray.push(value.list_name); //push fetched names to the array
             });
-            sortedArray.sort();
-            // console.log(sortedArray);
+            sortedArray.sort(); //sort the array
 
-            sortedArray.forEach((value) => {
-                const option = document.createElement('option');
-                option.value = value;
+            sortedArray.forEach((value) => { //loop through array and push the values into select 
+                const option = document.createElement('option'); //create option
+                option.value = value; //change value and text with content inside the array
                 option.textContent = value;
-                document.querySelector('#genre').append(option);
+                document.querySelector('#genre').append(option); //append the option
             });
-
-
-
 
         });
-
 }
 
 app.searchByISBN = function (isbn, id) {
     const isbnURL = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
     isbnURL.search = new URLSearchParams({
-        reqUrl: specificBookISBN,
+        reqUrl: app.specificBookISBN,
         'params[isbn]': isbn,
-        'params[api-key]': 'VGnDGaD8A3qh1qSrqo0ppSGLHoMcom3T' //api key
-        // 'proxyHeaders[Some-Header]': 'goes here',
+        'params[api-key]': app.apiKey //api key
+
     });
+
     //api call to populate the modal
-    fetch(isbnURL)
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            // console.log(data);
-            const div = document.createElement('div');
-            div.classList.add('modal');
+    const search = function () { //function used to run the fetch inside the main function call so that if the fetch fails we can recall this function so far we are only failing when the proxy server fails, possible endless loop situation if fetch starts calling for something that will never return data
 
+        app.loadingAnimation.style.display = 'flex'; //display loading animation by returning to flex
+        fetch(isbnURL)
+            .then(response => {
+                if (response.ok) { //if data is returned continue
+                    return response.json()
+                } else { //recall the search function doing everything over until we get data
+                    setTimeout(() => {
+                        search();
+                    }, 2000); //wait 2 seconds
 
+                }
+            })
+            .then(data => {
 
-            div.innerHTML = `<div class="modalScroll"><div class='innerContent'>
+                const div = document.createElement('div'); //create div 
+                div.classList.add('modal'); //add class of modal
+                // const imgSrc = data['results'][0]['isbns'][0].isbn10;
+                // console.log(app.dataBase);
+                const booklink = `<img id="${data['results'][0]['isbns'][0].isbn10}" src="https://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title} by ${data['results'][0].author}">`;
+
+                // console.log(booklink);
+
+                let inArray;
+
+                if (app.dataBase.includes(booklink)) {
+                    console.log('In array');
+                    inArray = true;
+                } else {
+                    console.log('not in array')
+                    inArray = false;
+                }
+
+                //div inner content is replaced with the necessary information from the api return to create the modal
+                div.innerHTML = `<div class="modalScroll"><div class='innerContent'>
             <button class="closeModal" onclick="app.closeModal(this)">&#10006</button>
             <p class='title'>${data['results'][0].title}</p>
-            <img src="https://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title} by ${data['results'][0].author}">
+            <img id = "${data['results'][0]['isbns'][0].isbn10}" src="https://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title} by ${data['results'][0].author}">
             <ul>
                 <li>Author: ${data['results'][0].author}</li>
                 <li>Publisher: ${data['results'][0].publisher}</li>
             </ul>
+
+            <button id ="listButton" onclick = "${!inArray === true ? "app.addToDatabase(this.parentNode)" : "app.removeFromDatabase(this.parentNode)"}">${!inArray ? "Add to List" : "Remove from List"}</button>
 
             <hr>
 
             <p>${data['results'][0].description}</p>
 
 
-            ${data['results'][0]['reviews'][0]['book_review_link'] === "" ? "" : `<p class='bookReviewName'>Book Review:</p><p class='bookReviewName'> <a href="${data['results'][0]['reviews'][0]['book_review_link']}">Review Link</a>`}
+            ${data['results'][0]['reviews'][0]['book_review_link'] === "" ? "" : `<p class='bookReviewName'> <a href="${data['results'][0]['reviews'][0]['book_review_link']}" target="_blank">Click Here For Review</a>`}
+            
 
-            <p><a href ="${app.amazonLinksArray[id]}" target="_blank"><img class="amazonPurchaseButton"src="https://mikapak.com/wp-content/uploads/2019/04/amazon-buy-now-button-1024x506-768x380.png" alt="Purchase Image for Amazon"></a></p>
+
+            <p class="amazonButton"><a href ="${app.amazonLinksArray[id]}" target="_blank"><img class="amazonPurchaseButton"src="https://mikapak.com/wp-content/uploads/2019/04/amazon-buy-now-button-1024x506-768x380.png" alt="Purchase Image for Amazon"></a></p>
             
 
 
         </div>
         </div>`;
+                //append the div
+                document.querySelector('body').append(div);
+                app.loadingAnimation.style.display = 'none';  //remove loading animation
+            });
 
-            document.querySelector('body').append(div);
+    }
+    search();
+}
 
-        });
+
+//  FIREBASE STUFF 
+//function to add things to database
+app.addToDatabase = function (isbn) {
+    let value = isbn.childNodes[5]; //get image dom
+
+    dbRef.push(value.outerHTML); //push data to firebase
+
+    isbn.parentNode.parentNode.style.display = 'none'; //close modal after click
 
 }
 
+app.removeFromDatabase = function (isbn, event) {
+
+    let value = app.dataBase.indexOf(isbn.childNodes[5].outerHTML); //get the index of the current clicked image outer html that should exist somewhere inside the app.dataBase
+
+    dbRef.child(app.dataBaseKey[value]).remove(); //remove specific database by using the returned index from above app.dataBase[value] should return the key for the passed outer html which will then get removed from the database removing the book from the list
+
+    isbn.parentNode.parentNode.style.display = 'none'; //close modal after click
+}
+//  FIREBASE STUFF 
+
 app.searchBooks = function (genre) {
+    app.loadingAnimation.style.display = 'flex';
     const populateUrl = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
     populateUrl.search = new URLSearchParams({
-        reqUrl: loadBooks,
+        reqUrl: app.loadBooks,
         'params[list]': genre,
-        'params[api-key]': 'VGnDGaD8A3qh1qSrqo0ppSGLHoMcom3T' //api key
-        // 'proxyHeaders[Some-Header]': 'goes here',
+        'params[api-key]': app.apiKey //api key
+
     });
     //api call to populate the main page
     fetch(populateUrl)
@@ -116,7 +236,7 @@ app.searchBooks = function (genre) {
             }
         })
         .then(data => {
-            // console.log(data);
+
             data['results'].forEach((value, index) => {
                 const imgEl = document.createElement('li');
                 const image = document.createElement('img'); //used to check if image has successfully loaded
@@ -135,16 +255,6 @@ app.searchBooks = function (genre) {
                     image.src = `https://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg?default=false`
                     app.amazonLinksArray.push(value.amazon_product_url);
 
-
-
-                    // image.addEventListener('error', function () {
-                    //     imgEl.innerHTML = `<p>${value['book_details'][0].title}</p>
-                    // <button class="buttonStyle" onclick="app.displayModal(this)" id=${index}><img id = "${value['isbns'][0].isbn10}" src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt=""></button>`
-                    //     document.querySelector('.bookDisplay').append(imgEl);
-                    // }, true); //no idea what this true does
-
-
-                    console.log(value['book_details'][0].author)
                     imgEl.innerHTML = `<p>${value['book_details'][0].title}</p>
                     <button class="buttonStyle" onclick="app.displayModal(this)" id=${index}><img id = "${value['isbns'][0].isbn10}" src="https://covers.openlibrary.org/b/ISBN/${value['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${value['book_details'][0].title} ${value['book_details'][0].author !== '' ? `by ${value['book_details'][0].author}.` : ""}"></button>`
                     document.querySelector('.bookDisplay').append(imgEl);
@@ -154,7 +264,7 @@ app.searchBooks = function (genre) {
 
             })
 
-
+            app.loadingAnimation.style.display = 'none'; //remove loading animation
         });
 
 }
@@ -180,20 +290,45 @@ app.addEventListeners = function () {
 
 
 }
+//function used to close the modal by changing its style
 app.closeModal = function (event) {
-    // console.log(`works`)
-    // console.log(event.parentNode.parentNode)
     event.parentNode.parentNode.parentNode.style.display = `none`;
 }
-//display model pop-up on tab & click
+
+//function used too call the search byISBN function which will eventually lead to displaying modal pop-up
 app.displayModal = function (event) {
     app.searchByISBN(event.childNodes[0].id, event.id); //call the search specific book api and pass the image id and the button id which will be used in the api call
 
 }
+
+
+// Back to top based on this https://www.w3schools.com/howto/howto_js_scroll_to_top.asp
+app.mybutton = document.getElementById("myBtn"); //button that is used for going back to top of page
+
+
+window.onscroll = function () { app.scrollFunction() }; //run this function on window scroll so when the user scrolls
+
+app.scrollFunction = function () {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) { // When the user scrolls down 20px from the top of the document display the button
+        app.mybutton.style.display = "block";
+    } else { //or hide the button
+        app.mybutton.style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+app.topFunction = function () {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+
+
 //init function
 app.init = function () {
     app.populateGenreOptions();
     app.addEventListeners();
+    app.loadingAnimation.style.display = 'none';
 
 
     setTimeout(() => { //wait 1 second for everything above to run first
@@ -201,6 +336,7 @@ app.init = function () {
     }, 1000);
 
 }
+
 
 //call init function
 app.init();

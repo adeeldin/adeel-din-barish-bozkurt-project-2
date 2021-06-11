@@ -33,7 +33,7 @@ body {
       margin: 0;
       font-stretch: expanded;
       letter-spacing: 5px;
-
+      padding-bottom: 15px;
       text-align: center;
       text-transform: uppercase;
       color: #f6e6cb;
@@ -42,7 +42,27 @@ body {
       color: inherit;
     }
   }
+  .backTopButton {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 125px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 10; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #7d5a50; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 18px; /* Increase font size */
+  }
+
+  .backTopButton:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+  }
 }
+
 .modal {
   position: fixed;
   width: 100vw;
@@ -75,6 +95,9 @@ body {
       display: flex;
       flex-direction: column;
       align-items: center;
+      ul {
+        padding-left: 0px;
+      }
       p {
         text-align: center;
       }
@@ -124,8 +147,30 @@ body {
 
 main {
   margin: auto;
+  min-height: calc(100vh - 250px);
+  h2 {
+    text-transform: uppercase;
+    text-align: center;
+    color: #b4846c;
+    font-size: 3rem;
+  }
+  hr {
+    border-style: dotted;
+    border-bottom: none;
+    width: 15vw;
+    border-width: 2.5vw;
+    color: #f6e6cb;
+  }
+
   .genreSelector {
     margin: 20px;
+  }
+  .loadingAnimation {
+    display: flex;
+    justify-content: center;
+    img {
+      background-image: none;
+    }
   }
   ul {
     padding: 0px;
@@ -152,6 +197,7 @@ main {
       }
       .buttonStyle:focus,
       .buttonStyle:hover {
+        will-change: transform;
         transform: scale(1.2);
         cursor: pointer;
       }
@@ -214,7 +260,26 @@ footer {
     }
   }
 }
-
+.userList {
+  padding: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(252, 222, 192, 0.3);
+  border-radius: 25px;
+  li {
+    width: calc(100% / 6);
+    height: auto;
+    button {
+      // background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
 @media only screen and (max-width: 600px) {
   .select_arrow {
     display: none;
@@ -223,22 +288,21 @@ footer {
   .modal {
     overflow-y: scroll;
     .modalScroll {
+      border-radius: 0px;
       .innerContent {
-        display: flex;
-        width: 100vw;
-        height: auto;
-        background-color: rgba(22, 22, 22, 0.973);
-        padding: 0;
         width: 100vw;
         height: 100vh;
-        overflow-y: auto;
-        border-radius: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        padding: 10px;
+        border-radius: 0px;
         img {
           width: 80vw;
           height: auto;
+        }
+        .amazonPurchaseButton {
+          width: 50%;
+        }
+        .amazonButton {
+          margin-bottom: 0px;
         }
         .closeModal {
           position: absolute;
@@ -248,11 +312,13 @@ footer {
       }
     }
   }
+  .backTopButton {
+    display: none !important;
+  }
   main {
     ul {
+      padding-left: 0px;
       li {
-        p {
-        }
         img {
           width: 80vw;
           height: auto;
@@ -278,7 +344,6 @@ footer {
         }
         input[type="submit"] {
           margin-left: 0px;
-          // font-size: 22px;
           padding: 10px 25px;
           text-decoration: none;
           text-shadow: 0px 0px 1px #6e6e6e;
@@ -289,6 +354,17 @@ footer {
         input[type="submit"]:active {
           position: relative;
           top: 1px;
+        }
+      }
+    }
+  }
+  .userList {
+    li {
+      width: calc(100% / 3);
+
+      button {
+        // background-image: url("https://islandpress.org/sites/default/files/default_book_cover_2015.jpg");
+        img {
         }
       }
     }
