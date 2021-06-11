@@ -510,6 +510,19 @@ main {
   margin: auto;
   min-height: calc(100vh - 250px);
 }
+main h2 {
+  text-transform: uppercase;
+  text-align: center;
+  color: #b4846c;
+  font-size: 3rem;
+}
+main hr {
+  border-style: dotted;
+  border-bottom: none;
+  width: 15vw;
+  border-width: 2.5vw;
+  color: #f6e6cb;
+}
 main .genreSelector {
   margin: 20px;
 }
@@ -610,6 +623,31 @@ footer p a:hover {
   color: red;
 }
 
+.userList {
+  padding: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(252, 222, 192, 0.3);
+  border-radius: 25px;
+}
+.userList li {
+  width: calc(100% / 6);
+  height: auto;
+}
+.userList li button img {
+  width: 100%;
+  height: auto;
+}
+
 @media only screen and (max-width: 600px) {
   .select_arrow {
     display: none;
@@ -679,5 +717,9 @@ footer p a:hover {
   main div form input[type=submit]:active {
     position: relative;
     top: 1px;
+  }
+
+  .userList li {
+    width: calc(100% / 3);
   }
 }
