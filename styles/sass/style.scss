@@ -348,7 +348,7 @@ footer {
   }
 }
 
-//
+//Book animation css taken from https://codepen.io/rafaelrinaldi/pen/LEYyKZ
 
 .book {
   @extend %book-rounded-corners;
@@ -503,7 +503,6 @@ footer {
       height: 150px;
       margin: 12px;
       button {
-        // width: 100%;
         padding: 0px;
 
         img {
