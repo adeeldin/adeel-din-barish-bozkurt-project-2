@@ -62,7 +62,8 @@ app.displayList = function () {
         listHeading.style.display = 'block'; //show heading if books are in list
 
         const li = document.createElement('li');
-        li.innerHTML = `<button class="buttonStyle" onclick="app.displayModal(this)">${value}</button>`;
+        li.classList.add('book');
+        li.innerHTML = `<button class="" onclick="app.displayModal(this)">${value}</button>`;
 
         document.querySelector('.userList').append(li);
     })
