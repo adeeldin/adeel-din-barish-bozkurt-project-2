@@ -38,17 +38,17 @@ app.dataBaseKey = []; //array to hold database keys
 
 dbRef.on('value', data => {
 
-    const toDoData = data.val(); //assign data
+    const bookData = data.val(); //assign data
 
     app.dataBase.splice(0, app.dataBase.length); //reset array
     app.dataBaseKey.splice(0, app.dataBaseKey.length); //reset array
 
-    for (let toDo in toDoData) {
-        // console.log(toDoData[toDo]);
-        // console.log(toDo);
-        // console.log(toDoDat);
-        app.dataBase.push(toDoData[toDo]);
-        app.dataBaseKey.push(toDo);
+    for (let book in bookData) {
+        // console.log(bookData[book]);
+        // console.log(book);
+        // console.log(bookData);
+        app.dataBase.push(bookData[book]);
+        app.dataBaseKey.push(book);
     }
 
     document.querySelector('.userList').innerHTML = '';
@@ -154,7 +154,7 @@ app.searchByISBN = function (isbn, id) {
                 let inArray;
 
                 if (app.dataBase.includes(booklink)) {
-                    console.log('In array');
+                    // console.log('In array');
                     inArray = true;
                 } else {
                     console.log('not in array')
@@ -171,7 +171,7 @@ app.searchByISBN = function (isbn, id) {
                 <li>Publisher: ${data['results'][0].publisher}</li>
             </ul>
 
-            <button id ="listButton" onclick = "${!inArray === true ? "app.addToDatabase(this.parentNode)" : "app.removeFromDatabase(this.parentNode)"}">${!inArray ? "Add to List" : "Remove from List"}</button>
+            <button id ="listButton" onclick = "${!inArray === true ? "app.addToDatabase(this.parentNode)" : "app.removeFromDatabase(this.parentNode)"}">${!inArray ? "Add to Bookshelf" : "Remove from Bookshelf"}</button>
 
             <hr>
 
