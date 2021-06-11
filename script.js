@@ -14,6 +14,70 @@ app.loadingAnimation = document.querySelector('.loadingAnimation');
 //array to hold specific amazon urls for the books that are displayed
 app.amazonLinksArray = [];
 
+
+//  FIREBASE STUFF 
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCB-dt5NQe-wMgm8ZmhJMNElBzMNPyPOuE",
+    authDomain: "book-times.firebaseapp.com",
+    databaseURL: "https://book-times-default-rtdb.firebaseio.com",
+    projectId: "book-times",
+    storageBucket: "book-times.appspot.com",
+    messagingSenderId: "40201210281",
+    appId: "1:40201210281:web:7c0bac1ad77694a8c0dcb8"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+//call firebase database and put reference in variable
+const dbRef = firebase.database().ref();
+
+app.dataBase = []; //array to hold database content
+app.dataBaseKey = []; //array to hold database keys
+
+dbRef.on('value', data => {
+
+    const toDoData = data.val(); //assign data
+
+    app.dataBase.splice(0, app.dataBase.length); //reset array
+    app.dataBaseKey.splice(0, app.dataBaseKey.length); //reset array
+
+    for (let toDo in toDoData) {
+        // console.log(toDoData[toDo]);
+        // console.log(toDo);
+        // console.log(toDoDat);
+        app.dataBase.push(toDoData[toDo]);
+        app.dataBaseKey.push(toDo);
+    }
+
+    document.querySelector('.userList').innerHTML = '';
+    app.displayList();
+})
+
+//  FIREBASE STUFF
+//display list
+app.displayList = function () {
+    const listHeading = document.querySelectorAll('.userListHeading'); //get headings
+    listHeading.forEach(value => { //for each heading hide
+        value.style.display = 'none';
+
+    })
+
+    document.querySelector('.userList').innerHTML = ''; //empty list ons screen
+
+    app.dataBase.forEach(value => {
+        listHeading.forEach(value => {
+            value.style.display = 'block';
+        })
+        const li = document.createElement('li');
+        li.innerHTML = `<button class="buttonStyle" onclick="app.displayModal(this)">${value}</button>`;
+
+        document.querySelector('.userList').append(li);
+    })
+}
+
+
 //function used to populate the select option 
 app.populateGenreOptions = function () {
     const populateUrl = new URL('https://proxy.hackeryou.com'); //proxy url for cors is necessary 
@@ -81,17 +145,33 @@ app.searchByISBN = function (isbn, id) {
 
                 const div = document.createElement('div'); //create div 
                 div.classList.add('modal'); //add class of modal
+                // const imgSrc = data['results'][0]['isbns'][0].isbn10;
+                // console.log(app.dataBase);
+                const booklink = `<img id="${data['results'][0]['isbns'][0].isbn10}" src="https://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title} by ${data['results'][0].author}">`;
 
+                // console.log(booklink);
+
+                let inArray;
+
+                if (app.dataBase.includes(booklink)) {
+                    console.log('In array');
+                    inArray = true;
+                } else {
+                    console.log('not in array')
+                    inArray = false;
+                }
 
                 //div inner content is replaced with the necessary information from the api return to create the modal
                 div.innerHTML = `<div class="modalScroll"><div class='innerContent'>
             <button class="closeModal" onclick="app.closeModal(this)">&#10006</button>
             <p class='title'>${data['results'][0].title}</p>
-            <img src="https://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title} by ${data['results'][0].author}">
+            <img id = "${data['results'][0]['isbns'][0].isbn10}" src="https://covers.openlibrary.org/b/ISBN/${data['results'][0]['isbns'][0].isbn10}-L.jpg" alt="The book cover for ${data['results'][0].title} by ${data['results'][0].author}">
             <ul>
                 <li>Author: ${data['results'][0].author}</li>
                 <li>Publisher: ${data['results'][0].publisher}</li>
             </ul>
+
+            <button id ="listButton" onclick = "${!inArray === true ? "app.addToDatabase(this.parentNode)" : "app.removeFromDatabase(this.parentNode)"}">${!inArray ? "Add to List" : "Remove from List"}</button>
 
             <hr>
 
@@ -99,6 +179,8 @@ app.searchByISBN = function (isbn, id) {
 
 
             ${data['results'][0]['reviews'][0]['book_review_link'] === "" ? "" : `<p class='bookReviewName'> <a href="${data['results'][0]['reviews'][0]['book_review_link']}" target="_blank">Click Here For Review</a>`}
+            
+
 
             <p class="amazonButton"><a href ="${app.amazonLinksArray[id]}" target="_blank"><img class="amazonPurchaseButton"src="https://mikapak.com/wp-content/uploads/2019/04/amazon-buy-now-button-1024x506-768x380.png" alt="Purchase Image for Amazon"></a></p>
             
@@ -114,6 +196,28 @@ app.searchByISBN = function (isbn, id) {
     }
     search();
 }
+
+
+//  FIREBASE STUFF 
+//function to add things to database
+app.addToDatabase = function (isbn) {
+    let value = isbn.childNodes[5]; //get image dom
+
+    dbRef.push(value.outerHTML); //push data to firebase
+
+    isbn.parentNode.parentNode.style.display = 'none'; //close modal after click
+
+}
+
+app.removeFromDatabase = function (isbn, event) {
+
+    let value = app.dataBase.indexOf(isbn.childNodes[5].outerHTML); //get the index of the current clicked image outer html that should exist somewhere inside the app.dataBase
+
+    dbRef.child(app.dataBaseKey[value]).remove(); //remove specific database by using the returned index from above app.dataBase[value] should return the key for the passed outer html which will then get removed from the database removing the book from the list
+
+    isbn.parentNode.parentNode.style.display = 'none'; //close modal after click
+}
+//  FIREBASE STUFF 
 
 app.searchBooks = function (genre) {
     app.loadingAnimation.style.display = 'flex';
